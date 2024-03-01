@@ -7,7 +7,6 @@ const pastaOrigem = 'C:/Users/timed/Documents/PDFS RAIZ';
 const pastaDestino = 'C:/Users/timed/Desktop/PDF FINAL';
 const caminhoArquivoExcel = 'C:/Users/timed/Downloads/relatorio.xlsx';
 
-// ...
 
 // Função para ler o arquivo Excel e obter os códigos
 function obterCodigosDoExcel() {
@@ -44,8 +43,9 @@ function obterCodigosDoExcel() {
 
 // Função para verificar se um arquivo é um PDF e tem o formato esperado
 function isArquivoValido(arquivo) {
-  return arquivo.toLowerCase().endsWith('.pdf') && /^(PI|PG)\d+$/i.test(arquivo);
+  return arquivo.toLowerCase().endsWith('.pdf') && /^(PI|PG)\d+\.pdf$/i.test(arquivo);
 }
+
 
 // Função para mover arquivos PDF com base nos códigos do Excel
 function moverArquivosComBaseNoExcel() {
@@ -67,6 +67,8 @@ function moverArquivosComBaseNoExcel() {
     // Itera sobre cada arquivo válido
     arquivosValidos.forEach(arquivo => {
       const codigoDoArquivo = arquivo.replace(/^(PI|PG)(\d+).pdf$/, '$2'); // Extrai o código do arquivo
+
+      // Verifica se o código do arquivo está nos códigos do Excel
       if (codigosDoExcel.includes(`PI${codigoDoArquivo}`) || codigosDoExcel.includes(`PG${codigoDoArquivo}`)) {
         const caminhoOrigem = path.join(pastaOrigem, arquivo);
         const caminhoDestino = path.join(pastaDestino, arquivo);
