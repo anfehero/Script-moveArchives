@@ -6,7 +6,6 @@ const xlsx = require('xlsx');
 const sourceFolder = 'C:/Users/RealMayer/Documents/VIVO';
 const destinationFolder = 'C:/Users/RealMayer/Desktop/MORTO';
 const excelFilePath = 'C:/Users/RealMayer/Documents/relatorio.xlsx';
-const wordFolder = 'C:/Users/RealMayer/Desktop/WORD FINAL';
 
 // Function to read the Excel file and get the codes
 function getCodesFromExcel() {
