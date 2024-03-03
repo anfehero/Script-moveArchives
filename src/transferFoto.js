@@ -29,10 +29,10 @@ function isImagemValida(arquivo) {
   const codigosDoExcelImagens = obterCodigosDoExcelImagens();
 
   // Extrai o código da imagem do nome do arquivo
-  const codigoDaImagem = arquivo.match(/^(f|F)\d+-\d+-\d+/);
+  const codigoDaImagem = arquivo.match(/^(f|F)\d{3,6}-?\d{2,3}-\d{3}/);
 
   // Verifica se o arquivo é uma imagem e se o código está nos códigos do Excel
-  return /\.(jpg|jpeg|png)$/i.test(arquivo) && codigoDaImagem && codigosDoExcelImagens.includes(codigoDaImagem[0].toUpperCase());
+  return codigoDaImagem && codigosDoExcelImagens.includes(codigoDaImagem[0].toUpperCase());
 }
 
 function moverImagensComBaseNoExcel() {
