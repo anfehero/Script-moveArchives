@@ -3,9 +3,9 @@ const path = require('path');
 const xlsx = require('xlsx');
 
 // Paths
-const sourceFolder = 'C:/Users/RealMayer/Documents/VIVO';
-const destinationFolder = 'C:/Users/RealMayer/Desktop/MORTO';
-const excelFilePath = 'C:/Users/RealMayer/Documents/relatorio.xlsx';
+const sourceFolder = 'path';
+const destinationFolder = 'path';
+const excelFilePath = 'path/relatorio.xlsx';
 
 // Funcao para ler o excel e pegar os codigos
 function getCodesFromExcel() {
