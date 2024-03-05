@@ -7,7 +7,7 @@ const sourceFolder = 'path';
 const destinationFolder = 'path;
 const excelFilePath = 'path/relatorio.xlsx';
 
-// Function to read the Excel file and get the codes
+// Funcao para ler o excel e pegar os codigos
 function getCodesFromExcel() {
   const workbook = xlsx.readFile(excelFilePath);
   const firstSheetName = workbook.SheetNames[0];
@@ -15,12 +15,13 @@ function getCodesFromExcel() {
   const cells = xlsx.utils.sheet_to_json(sheet);
 
   // Filter valid codes
+  // Valida os Codigos
   const validCodes = cells
     .map(row => {
       const codePI = `PI${row.PI || ''}`;
       const codePG = `PG${row.PI || ''}`;
 
-      // Concatenate "PI" and "PG" with the codes, removing whitespace and other characters
+      // Concatena "Pi" e "PG" com os codigos
       const concatenatedCodePI = codePI.replace(/[^a-zA-Z0-9]/g, '');
       const concatenatedCodePG = codePG.replace(/[^a-zA-Z0-9]/g, '');
 
@@ -32,38 +33,38 @@ function getCodesFromExcel() {
   return validCodes;
 }
 
-// Function to check if the files are PDFs
+// Funcao para chegar se o arquivos são pdfs
 function isFileValid(file) {
   const lowerCaseFile = file.toLowerCase();
   return (lowerCaseFile.endsWith('.pdf') || lowerCaseFile.endsWith('.PDF')) && /^(PI|PG)\d+\.pdf$/i.test(file);
 }
 
-// Function to move the PDF and files based on the Excel PIs
+// Funcao para mover o pdf baseados nos codigos do excel
 function moveFilesBasedOnExcel() {
   const excelCodes = getCodesFromExcel();
   let movedFilesCount = 0;
  
-  // Read files from the source folder
+  // Lê o arquivo da pasta source
   fs.readdir(sourceFolder, (err, files) => {
     if (err) {
       console.error('Error reading the source folder:', err);
       return;
     }
 
-    // Filter only valid files
+    // Filtra apenas arquivos validos
     const validFiles = files.filter(isFileValid);
 
     console.log('Valid Files:', validFiles);
     
     validFiles.forEach(file => {
-      const fileCode = file.replace(/^(PI|PG)(\d+).pdf$/i, '$2'); // Extract the code
+      const fileCode = file.replace(/^(PI|PG)(\d+).pdf$/i, '$2'); 
 
-      // Check if the file's code is equal to the one in Excel
+      // Checha se o codigo do arquivo é igual ao do excel
       if (excelCodes.includes(`PI${fileCode}`) || excelCodes.includes(`PG${fileCode}`)) {
         const sourcePath = path.join(sourceFolder, file);
         const destinationPath = path.join(destinationFolder, file);
 
-        // Move the file (cut and paste)
+        // Recorta e cola na pasta de destino
         fs.renameSync(sourcePath, destinationPath);
 
         console.log(`File moved: ${file}`);
@@ -71,7 +72,7 @@ function moveFilesBasedOnExcel() {
       }
     });
 
-    // Check how many files were moved
+    // Verifica quantos arquivos foram movidos
     if (movedFilesCount > 0) {
       console.log(`${movedFilesCount} files were moved successfully.`);
     } else {
