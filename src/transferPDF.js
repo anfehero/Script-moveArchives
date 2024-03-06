@@ -14,7 +14,6 @@ function getCodesFromExcel() {
   const sheet = workbook.Sheets[firstSheetName];
   const cells = xlsx.utils.sheet_to_json(sheet);
 
-  // Filter valid codes
   // Valida os Codigos
   const validCodes = cells
     .map(row => {
